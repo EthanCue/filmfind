@@ -27,7 +27,7 @@ class NlpConfig(AppConfig):
                 nltk.download(package)        
         # Cargar el archivo de Excel y combinar la columna de título y descripción
         try:
-            movies_df = pd.read_excel('C:/Users/ethan/OneDrive/Desktop/ESCOM/ESCOM_6/Ingenieria_de_Software/FilmFind/film_dataset/moviesShortClean.xlsx')
+            movies_df = pd.read_excel('./film_dataset/moviesShortClean.xlsx')
 
             #dataset completo:
             #movies_df = pd.read_excel('C:/Users/ethan/OneDrive/Desktop/ESCOM/ESCOM_6/Ingenieria_de_Software/FilmFind/film_dataset/moviesClean.xlsx')
