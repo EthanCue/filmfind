@@ -3,6 +3,7 @@ from django.apps import AppConfig
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
+import nltk
 
 class NlpConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -12,6 +13,18 @@ class NlpConfig(AppConfig):
     knn_model = None
 
     def ready(self):
+        nltk_packages = [
+            'stopwords',
+            'punkt',  # asegúrate de incluir punkt completo
+            'wordnet',
+            'omw-1.4'
+        ]
+
+        for package in nltk_packages:
+            try:
+                nltk.data.find(f"tokenizers/{package}") if package == 'punkt' else nltk.data.find(f"corpora/{package}")
+            except LookupError:
+                nltk.download(package)        
         # Cargar el archivo de Excel y combinar la columna de título y descripción
         try:
             movies_df = pd.read_excel('C:/Users/ethan/OneDrive/Desktop/ESCOM/ESCOM_6/Ingenieria_de_Software/FilmFind/film_dataset/moviesShortClean.xlsx')
