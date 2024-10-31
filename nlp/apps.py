@@ -8,14 +8,14 @@ import nltk
 class NlpConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'nlp'
-    movies_data = None  # Variable de clase para almacenar los datos
+    movies_data = None
     vectorizer = None
     knn_model = None
 
     def ready(self):
         nltk_packages = [
             'stopwords',
-            'punkt',  # asegúrate de incluir punkt completo
+            'punkt',
             'wordnet',
             'omw-1.4'
         ]
@@ -25,7 +25,6 @@ class NlpConfig(AppConfig):
                 nltk.data.find(f"tokenizers/{package}") if package == 'punkt' else nltk.data.find(f"corpora/{package}")
             except LookupError:
                 nltk.download(package)        
-        # Cargar el archivo de Excel y combinar la columna de título y descripción
         try:
             movies_df = pd.read_excel('./film_dataset/moviesShortClean.xlsx')
 
