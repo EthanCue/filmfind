@@ -2,14 +2,10 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializer import TaskSerializer, MovieSerializer
-from .models import testTask, Movie
+from .models import Movie
 from .utils.descProcessing import normalize
 from .utils.findSimilarity import recommend_movies
 from django.http import JsonResponse
-
-class TaskView(viewsets.ModelViewSet):
-    serializer_class = TaskSerializer
-    queryset = testTask.objects.all()
 
 @api_view(['GET'])
 def getMovies(request):

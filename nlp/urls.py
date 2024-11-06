@@ -5,7 +5,6 @@ from nlp import views
  
 # api versioning
 router = routers.DefaultRouter()
-router.register(r'nlp', views.TaskView, 'tasks')
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),
