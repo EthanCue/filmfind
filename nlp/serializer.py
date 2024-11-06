@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import testTask, Movie
-
-class TaskSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = testTask
-        #fields = ('id', 'title', 'description', 'don')
-        fields = '__all__'
+from .models import Movie
 
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
