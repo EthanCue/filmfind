@@ -11,6 +11,7 @@ class Movie(models.Model):
     tagline = models.CharField(max_length=255, null=True, blank=True)
     keywords = models.TextField(null=True, blank=True)
     poster_path = models.URLField(max_length=500, null=True, blank=True)
+    normalizedOverview = models.TextField(blank=True)
 
     def __str__(self):
         return self.title

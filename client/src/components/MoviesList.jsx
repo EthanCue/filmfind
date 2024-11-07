@@ -3,6 +3,7 @@ import { getAllMovies, recommendMovies } from "../api/Task.api";
 import { MovieCard } from "./MovieCard";
 
 export function MoviesList({ recommendations }) {
+  console.log(recommendations)
   return (
     <div className="grid grid-cols-3 gap-4 pb-5">
       {recommendations.map((movie) => (

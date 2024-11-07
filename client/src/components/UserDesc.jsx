@@ -31,6 +31,7 @@ export function UserDesc() {
           position: "bottom-right",
           style: { background: "#101010", color: "#fff" },
         });
+        console.log(recommendations);
         navigate("/movies-recomendations", {
           state: { recommendations, normalizedDesc, startIndex: 0 },
         });
