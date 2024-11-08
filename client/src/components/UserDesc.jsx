@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createUserDesc, recommendMovies } from "../api/Task.api";
 import { toast } from "react-hot-toast";
 

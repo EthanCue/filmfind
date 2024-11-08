@@ -1,63 +1,30 @@
-# apps.py
-from django.apps import AppConfig 
-import os
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.neighbors import NearestNeighbors
-import nltk
+from django.apps import AppConfig
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
+from .utils.loadData import load_nltk_resources, load_data_and_initialize_model
 
 class NlpConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'nlp'
-    movies_data = None
     vectorizer = None
     knn_model = None
+    moviesData = None  # Agregar atributo para los datos de las películas
 
     def ready(self):
-        # Verificar y descargar paquetes de NLTK solo si faltan
-        nltk_packages = [
-            ('tokenizers/punkt', 'punkt'),
-            ('corpora/stopwords', 'stopwords'),
-            ('corpora/wordnet', 'wordnet'),
-            ('corpora/omw-1.4', 'omw-1.4')
-        ]
+        # Cargar recursos de NLTK
+        load_nltk_resources()
+        print("Recursos de NLTK cargados correctamente.")
 
-        for resource, package in nltk_packages:
-            try:
-                nltk.data.find(resource)
-            except LookupError:
-                nltk.download(package)
+        # Registrar una señal para cargar el modelo después de que se hayan migrado las bases de datos
+        self.load_model()
 
-        # Verificar si los datos de películas ya están cargados
-        if NlpConfig.movies_data is None or NlpConfig.vectorizer is None or NlpConfig.knn_model is None:
-            try:
-                # Cargar el archivo de datos solo si no está en memoria
-                file_path = './film_dataset/moviesClean.xlsx'
-                if os.path.exists(file_path):
-                    movies_df = pd.read_excel(file_path)
-
-                    # Asegurarse de que 'normalizedOverview' esté presente y no tenga valores NaN
-                    if 'normalizedOverview' in movies_df.columns:
-                        movies_df['normalizedOverview'] = movies_df['normalizedOverview'].fillna('').astype(str)
-                    else:
-                        raise KeyError("La columna 'normalizedOverview' no se encontró en el archivo de datos.")
-
-                    # Guardar los datos en la configuración de la aplicación
-                    NlpConfig.movies_data = movies_df
-
-                    # Inicializar el vectorizador y el modelo KNN
-                    vectorizer = TfidfVectorizer()
-                    tfidf_matrix = vectorizer.fit_transform(movies_df['normalizedOverview'])
-
-                    knn_model = NearestNeighbors(n_neighbors=7, metric='cosine')
-                    knn_model.fit(tfidf_matrix)
-
-                    # Asignar el vectorizador y el modelo entrenado a la configuración de la aplicación
-                    NlpConfig.vectorizer = vectorizer
-                    NlpConfig.knn_model = knn_model
-
-                    print("Datos de películas y modelo KNN cargados con éxito al iniciar el servidor.")
-                else:
-                    print(f"Archivo de datos no encontrado en la ruta: {file_path}")
-            except Exception as e:
-                print(f"Error al cargar los datos de películas o al inicializar el modelo: {e}")
+    def load_model(self, **kwargs):
+        print("load_model")
+        vectorizer, knn_model, moviesData = load_data_and_initialize_model()
+        if vectorizer and knn_model and not moviesData.empty:
+            NlpConfig.vectorizer = vectorizer
+            NlpConfig.knn_model = knn_model
+            NlpConfig.moviesData = moviesData
+            print("Vectorizador, modelo KNN y datos de películas cargados correctamente en NlpConfig.")
+        else:
+            print("Error al cargar el modelo y los datos de películas.")
