@@ -25,7 +25,7 @@ def recommend_movies(user_description, start_index=0, batch_size=3):
 
     try:
         # Buscar los vecinos más cercanos a la descripción del usuario
-        distances, indices = knn_model.kneighbors(user_vector, n_neighbors=start_index + batch_size + 1)
+        _, indices = knn_model.kneighbors(user_vector, n_neighbors=start_index + batch_size + 1)
 
         # Seleccionar las películas recomendadas según el índice de inicio y el tamaño del lote
         recommended_movies = movies_df.iloc[indices[0][start_index + 1 : start_index + batch_size + 1]]  # Excluye el índice 0
