@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s82dd$sm@e360zz6cyl_m84w+=7^nu(_m9j+1d@ro&y6grb=fv'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-key-for-dev-only")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,12 +87,12 @@ WSGI_APPLICATION = 'FilmFindBack.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # o 'django.db.backends.mysql' para MySQL
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'moviedb',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'localhost',  # o dirección del servidor de base de datos
-        'PORT': '5432',       # puerto por defecto de PostgreSQL; para MySQL suele ser 3306
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

@@ -1,11 +1,10 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { MoviesList } from "../components/MoviesList";
 import { recommendMovies } from "../api/Task.api";
 
 export function MoviesPage() {
   const location = useLocation();
-  const navigate = useNavigate();
   const initialRecommendations = location.state?.recommendations || [];
   const normalizedDesc = location.state?.normalizedDesc;
   
