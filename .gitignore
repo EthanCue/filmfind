@@ -1,1 +1,7 @@
 venv/
+DJANGO_SECRET_KEY.env
+SONAR_SECRET.env
+.scannerwork/
+sonar-project.properties
+__pycache__/_
+*.pyc

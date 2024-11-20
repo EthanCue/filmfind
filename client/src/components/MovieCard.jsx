@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export function MovieCard({ movie }) {
   return (
     <div className="max-w-sm bg-neutral-800 rounded-xl hover:bg-neutral-700 hover:cursor-pointer">
@@ -23,3 +25,11 @@ export function MovieCard({ movie }) {
     </div>
   );
 }
+
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    poster_path: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    overview: PropTypes.string,
+  }).isRequired,
+};

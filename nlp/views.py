@@ -1,7 +1,11 @@
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+<<<<<<< HEAD
 from .serializer import TaskSerializer, MovieSerializer
+=======
+from .serializer import MovieSerializer
+>>>>>>> tests
 from .models import Movie
 from .utils.descProcessing import normalize
 from .utils.findSimilarity import recommend_movies

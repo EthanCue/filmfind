@@ -1,25 +1,21 @@
-# apps.py
-from django.apps import AppConfig 
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.neighbors import NearestNeighbors
-import nltk
+from django.apps import AppConfig
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
+from .utils.loadData import load_nltk_resources, load_data_and_initialize_model
 
 class NlpConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'nlp'
-    movies_data = None
     vectorizer = None
     knn_model = None
+    moviesData = None  # Agregar atributo para los datos de las películas
 
     def ready(self):
-        nltk_packages = [
-            'stopwords',
-            'punkt',
-            'wordnet',
-            'omw-1.4'
-        ]
+        # Cargar recursos de NLTK
+        load_nltk_resources()
+        print("Recursos de NLTK cargados correctamente.")
 
+<<<<<<< HEAD
         for package in nltk_packages:
             try:
                 nltk.data.find(f"tokenizers/{package}") if package == 'punkt' else nltk.data.find(f"corpora/{package}")
@@ -27,26 +23,18 @@ class NlpConfig(AppConfig):
                 nltk.download(package)        
         try:
             movies_df = pd.read_excel('./film_dataset/moviesClean.xlsx')
+=======
+        # Registrar una señal para cargar el modelo después de que se hayan migrado las bases de datos
+        self.load_model()
+>>>>>>> tests
 
-            #dataset completo:
-            #movies_df = pd.read_excel('C:/Users/ethan/OneDrive/Desktop/ESCOM/ESCOM_6/Ingenieria_de_Software/FilmFind/film_dataset/moviesClean.xlsx')
-            #movies_df['overview'] = movies_df['normalizedOverview']
-
-            #movies_df['overview'] = movies_df['overview'].fillna('').astype(str)
-
-            NlpConfig.movies_data = movies_df
-
-            # Inicializar el vectorizador y el modelo KNN
-            vectorizer = TfidfVectorizer()
-            tfidf_matrix = vectorizer.fit_transform(movies_df['normalizedOverview'])
-
-            knn_model = NearestNeighbors(n_neighbors=7, metric='cosine')
-            knn_model.fit(tfidf_matrix)
-
-            # Asignar el vectorizador y el modelo entrenado a la configuración de la aplicación
+    def load_model(self, **kwargs):
+        print("load_model")
+        vectorizer, knn_model, moviesData = load_data_and_initialize_model()
+        if vectorizer and knn_model and not moviesData.empty:
             NlpConfig.vectorizer = vectorizer
             NlpConfig.knn_model = knn_model
-
-            print("Datos de películas y modelo KNN cargados con éxito al iniciar el servidor.")
-        except Exception as e:
-            print(f"Error al cargar los datos de películas o al inicializar el modelo: {e}")
+            NlpConfig.moviesData = moviesData
+            print("Vectorizador, modelo KNN y datos de películas cargados correctamente en NlpConfig.")
+        else:
+            print("Error al cargar el modelo y los datos de películas.")

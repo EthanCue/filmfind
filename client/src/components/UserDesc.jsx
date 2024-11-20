@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createUserDesc, recommendMovies } from "../api/Task.api";
 import { toast } from "react-hot-toast";
 
@@ -31,6 +31,7 @@ export function UserDesc() {
           position: "bottom-right",
           style: { background: "#101010", color: "#fff" },
         });
+        console.log(recommendations);
         navigate("/movies-recomendations", {
           state: { recommendations, normalizedDesc, startIndex: 0 },
         });
