@@ -2,5 +2,5 @@ projectKey=Filmfind
 serverUrl=http://localhost:9000
 serverVersion=10.7.0.96327
 dashboardUrl=http://localhost:9000/dashboard?id=Filmfind
-ceTaskId=7d85217b-fb3e-4eed-8b82-8ef6fd710f50
-ceTaskUrl=http://localhost:9000/api/ce/task?id=7d85217b-fb3e-4eed-8b82-8ef6fd710f50
+ceTaskId=0a7104a6-6a07-46ca-b2e5-875c409ef3bd
+ceTaskUrl=http://localhost:9000/api/ce/task?id=0a7104a6-6a07-46ca-b2e5-875c409ef3bd
