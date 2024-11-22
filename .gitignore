@@ -5,3 +5,4 @@ SONAR_SECRET.env
 sonar-project.properties
 __pycache__/_
 *.pyc
+report-task.txt
