@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const taskApi = axios.create({
-  baseURL: "http://127.0.0.1:8000/tasks/api/v1/nlp/",
+  baseURL: "http://127.0.0.1:8000/tasks/api/v1/",
 });
 
 export const getAllMovies = () => taskApi.get("http://127.0.0.1:8000/tasks/api/v1/getMovies/");
