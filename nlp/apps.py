@@ -15,18 +15,7 @@ class NlpConfig(AppConfig):
         load_nltk_resources()
         print("Recursos de NLTK cargados correctamente.")
 
-<<<<<<< HEAD
-        for package in nltk_packages:
-            try:
-                nltk.data.find(f"tokenizers/{package}") if package == 'punkt' else nltk.data.find(f"corpora/{package}")
-            except LookupError:
-                nltk.download(package)        
-        try:
-            movies_df = pd.read_excel('./film_dataset/moviesClean.xlsx')
-=======
-        # Registrar una señal para cargar el modelo después de que se hayan migrado las bases de datos
         self.load_model()
->>>>>>> tests
 
     def load_model(self, **kwargs):
         print("load_model")
