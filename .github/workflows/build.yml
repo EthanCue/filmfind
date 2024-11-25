@@ -1,4 +1,5 @@
 name: Build
+uses: sonarsource/sonarqube-scan-action@v4
 
 on:
   push:
