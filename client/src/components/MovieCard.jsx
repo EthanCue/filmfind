@@ -19,8 +19,10 @@ export function MovieCard({ movie }) {
           {movie.title}
         </h5>
         <p className="mb-3 text-stone-300 max-h-32 overflow-y-auto">
-          {movie.overview}
-        </p>
+          {movie.overview && movie.overview.trim() && movie.overview !== 'nan'
+          ? movie.overview
+          : "Sorry, we don't have the overview, but the title might interest you."}
+      </p>
       </div>
     </div>
   );
