@@ -17,29 +17,33 @@ export function UserDesc() {
     try {
       const response = await createUserDesc(data);
       const normalizedDesc = response.normalized_description;
-      toast.success("Descripcion creada", {
+      /*
+      toast.success("Description succesfully created", {
         position: "bottom-right",
         style: { background: "#101010", color: "#fff" },
       });
+      */
       try {
         const recommendations = await recommendMovies(
           normalizedDesc,
           0,
           batchSize
         );
-        toast.success("Recomendaciones creadas", {
+        /*
+        toast.success("Recommendations ready!", {
           position: "bottom-right",
           style: { background: "#101010", color: "#fff" },
         });
+        */
         console.log(recommendations);
         navigate("/movies-recomendations", {
           state: { recommendations, normalizedDesc, startIndex: 0 },
         });
       } catch (error) {
-        toast.error("Error al buscar recomendaciones");
+        toast.error("Error searching recommendations");
       }
     } catch (error) {
-      toast.error("Error al procesar la descripción");
+      toast.error("Error procesing description");
     }
   });
 
@@ -48,13 +52,13 @@ export function UserDesc() {
       <form onSubmit={onSubmit}>
         <textarea
           rows="7"
-          placeholder="Escribe aqui..."
+          placeholder="Write here..."
           {...register("description", { required: true })}
           className="bg-gray-50 p-3 rounded-lg block w-full mb-3 text-neutral-700"
         ></textarea>
-        {errors.description && <span>Ingresa una descrición</span>}
+        {errors.description && <span>Write a description</span>}
         <div className="flex justify-center">
-          <button className="bg-ffpink p-3 rounded-full w-1/2">Buscar</button>
+          <button className="bg-ffpink p-3 rounded-full w-1/2">Search</button>
         </div>
       </form>
     </div>
