@@ -18,12 +18,14 @@ class NlpConfig(AppConfig):
         self.load_model()
 
     def load_model(self, **kwargs):
-        print("load_model")
-        vectorizer, knn_model, moviesData = load_data_and_initialize_model()
-        if vectorizer and knn_model and not moviesData.empty:
-            NlpConfig.vectorizer = vectorizer
+        print("Cargando el modelo...")
+        tokenizer, model, knn_model, movies_df = load_data_and_initialize_model()
+        
+        if knn_model and movies_df is not None and not movies_df.empty:
+            NlpConfig.tokenizer = tokenizer  # Si necesitas el tokenizer
+            NlpConfig.model = model          # Si necesitas el modelo BERT
             NlpConfig.knn_model = knn_model
-            NlpConfig.moviesData = moviesData
-            print("Vectorizador, modelo KNN y datos de películas cargados correctamente en NlpConfig.")
+            NlpConfig.moviesData = movies_df
+            print("Modelo BERT, vectorizador, modelo KNN y datos de películas cargados correctamente.")
         else:
             print("Error al cargar el modelo y los datos de películas.")
